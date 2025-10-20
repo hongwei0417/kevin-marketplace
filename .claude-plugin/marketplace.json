@@ -1,35 +1,24 @@
 {
-  "name": "kevin-claude-marketplace",
-  "description": "Kevin 的 Claude Code Plugin Marketplace - 包含文檔摘要和 Notion 整合工具",
-  "owner": {
-    "name": "Kevin Hu",
-    "email": "your-email@example.com",
-    "url": "https://github.com/yourusername"
-  },
-  "homepage": "https://github.com/yourusername/claude-marketplace",
-  "plugins": [
-    {
-      "name": "doc-summary-notion",
-      "source": "./",
-      "description": "分析文檔並生成繁體中文摘要，自動上傳至 Notion AI Documents 資料庫",
-      "version": "1.0.0",
-      "author": {
-        "name": "Kevin Hu"
-      },
-      "keywords": [
-        "documentation",
-        "summary",
-        "notion",
-        "traditional-chinese",
-        "ai-documents"
-      ],
-      "category": "productivity",
-      "tags": [
-        "notion",
-        "documentation",
-        "chinese",
-        "ai"
-      ]
-    }
-  ]
+	"name": "kevin-claude-marketplace",
+	"description": "Kevin 的 Claude Code Plugin Marketplace - 包含文檔摘要和 Notion 整合工具",
+	"owner": {
+		"name": "Kevin Hu",
+		"email": "iamhongwei0417@gmail.com",
+		"url": "https://github.com/hongwei0417"
+	},
+	"homepage": "https://github.com/hongwei0417/kevin-marketplace",
+	"plugins": [
+		{
+			"name": "doc-summary-notion",
+			"source": "./",
+			"description": "分析文檔並生成繁體中文摘要，自動上傳至 Notion AI Documents 資料庫",
+			"version": "1.0.0",
+			"author": {
+				"name": "Kevin Hu"
+			},
+			"keywords": ["documentation", "summary", "notion", "traditional-chinese", "ai-documents"],
+			"category": "productivity",
+			"tags": ["notion", "documentation", "chinese", "ai"]
+		}
+	]
 }
