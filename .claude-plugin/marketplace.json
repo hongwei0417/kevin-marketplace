@@ -10,7 +10,7 @@
 	"plugins": [
 		{
 			"name": "doc-summary-notion",
-			"source": "./",
+			"source": "./plugins/doc-summary-notion",
 			"description": "分析文檔並生成繁體中文摘要，自動上傳至 Notion AI Documents 資料庫",
 			"version": "1.0.0",
 			"author": {

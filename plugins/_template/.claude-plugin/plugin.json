@@ -1,0 +1,23 @@
+{
+	"name": "your-plugin-name",
+	"version": "1.0.0",
+	"description": "Plugin 的簡短描述",
+	"author": {
+		"name": "Your Name",
+		"email": "your-email@example.com"
+	},
+	"homepage": "https://github.com/yourusername/your-plugin",
+	"repository": "https://github.com/yourusername/your-plugin",
+	"license": "MIT",
+	"keywords": ["keyword1", "keyword2"],
+	"commands": ["./commands/your-command.md"],
+	"mcpServers": {
+		"your-mcp-server": {
+			"command": "npx",
+			"args": ["-y", "@your-org/your-mcp-server"],
+			"env": {
+				"YOUR_API_KEY": "${YOUR_API_KEY}"
+			}
+		}
+	}
+}

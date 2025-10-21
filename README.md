@@ -1,99 +1,45 @@
-# Doc Summary Notion Plugin for Claude Code
+# Kevin's Claude Code Plugin Marketplace
 
-這是一個 Claude Code plugin，提供文檔分析與 Notion 整合功能。可以分析網頁、本地文件或目錄，生成繁體中文摘要並自動上傳至 Notion AI Documents 資料庫。
-
-## 功能特色
-
-- 📄 **多來源支援**：支援 URL、本地文件、目錄分析
-- 🇹🇼 **繁體中文摘要**：自動生成結構化的繁體中文內容摘要
-- 🏷️ **智能標籤管理**：自動匹配現有標籤或創建新標籤
-- 📊 **視覺化支援**：可選的 Mermaid 圖表增強理解
-- 🖼️ **圖片保留**：保留原文檔中的重要圖片
-- 🔗 **引用連結掃描**：自動抓取並分析文章中的參考連結（最多 5 個）
-- ☁️ **Notion 整合**：自動上傳至指定的 Notion 資料庫
+這是一個 Claude Code Plugin Marketplace，包含多個實用的 plugins，旨在提升開發效率和自動化工作流程。
 
 ## 目錄結構
 
 ```
-claude-marketplace/
+kevin-marketplace/
 ├── .claude-plugin/
-│   ├── plugin.json          # Plugin 配置文件
-│   └── marketplace.json     # Marketplace 配置文件
-├── commands/
-│   └── doc-summary.md       # /doc-summary 命令定義
+│   └── marketplace.json      # Marketplace 配置文件
+├── plugins/
+│   ├── doc-summary-notion/   # 文檔摘要 & Notion 整合 plugin
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   └── commands/
+│   │       └── doc-summary.md
+│   └── _template/            # 新 plugin 範例模板
+│       ├── .claude-plugin/
+│       │   └── plugin.json
+│       ├── commands/
+│       │   └── your-command.md
+│       └── README.md
+├── LICENSE
 └── README.md
 ```
 
-## 安裝方式
+## 可用的 Plugins
 
-### 方式一：從本地安裝（開發測試）
+### 1. Doc Summary Notion
 
-1. 克隆此 repository：
-```bash
-git clone https://github.com/yourusername/claude-marketplace.git
-cd claude-marketplace
-```
+分析文檔並生成繁體中文摘要，自動上傳至 Notion AI Documents 資料庫。
 
-2. 在 Claude Code 中安裝：
-```bash
-/plugin install /Users/kevinhu/Desktop/coding/claude-marketplace
-```
+**功能特色：**
+- 📄 支援 URL、本地文件、目錄分析
+- 🇹🇼 自動生成繁體中文摘要
+- 🏷️ 智能標籤管理
+- 📊 可選的 Mermaid 圖表
+- 🖼️ 保留原文檔重要圖片
+- 🔗 自動掃描參考連結
+- ☁️ 自動上傳至 Notion
 
-### 方式二：從 GitHub 安裝（推薦）
-
-1. 將此 repository 推送到 GitHub
-
-2. 添加 marketplace：
-```bash
-/plugin marketplace add yourusername/claude-marketplace
-```
-
-3. 瀏覽並安裝 plugin：
-```bash
-/plugin
-```
-然後從列表中選擇 "doc-summary-notion" 安裝
-
-## 環境配置
-
-### 1. 設定 Notion API Key
-
-在使用前需要設定 Notion API Key 環境變數：
-
-```bash
-export NOTION_API_KEY="your_notion_integration_token"
-```
-
-或在 `~/.claude/settings.json` 中配置：
-
-```json
-{
-  "env": {
-    "NOTION_API_KEY": "your_notion_integration_token"
-  }
-}
-```
-
-### 2. 獲取 Notion API Key
-
-1. 訪問 [Notion Integrations](https://www.notion.so/my-integrations)
-2. 點擊 "+ New integration"
-3. 設定名稱並選擇 workspace
-4. 複製 "Internal Integration Token"
-5. 在 Notion 中將資料庫分享給此 integration
-
-### 3. 準備 Notion 資料庫
-
-確保你的 Notion workspace 中有一個名為 "AI Documents" 的資料庫，包含以下屬性：
-
-- **Title**：文檔標題（title type）
-- **Tags**：標籤（multi_select type）
-- **URL**：來源網址（url type）
-
-## 使用方法
-
-### 基本用法
-
+**使用方式：**
 ```bash
 # 分析網頁文章
 /doc-summary https://example.com/article
@@ -101,179 +47,59 @@ export NOTION_API_KEY="your_notion_integration_token"
 # 分析本地文件
 /doc-summary ~/projects/README.md
 
-# 分析目錄（會處理目錄中的文件）
-/doc-summary /path/to/docs
-
 # 指定自定義標籤
 /doc-summary https://example.com/article AI,ML,Tutorial
-/doc-summary ~/projects/README.md Architecture,Design
 ```
 
-### 執行流程
+詳細說明請參考：[plugins/doc-summary-notion/README.md](plugins/doc-summary-notion/)
 
-1. **讀取內容**
-   - URL → 使用 WebFetch 獲取
-   - 本地文件 → 使用 Read 讀取
-   - 目錄 → 使用 Glob 掃描文件
+---
 
-2. **掃描參考連結**
-   - 自動從內容中提取連結
-   - 最多獲取 5 個參考資料
-   - 合併為完整分析素材
+## 安裝方式
 
-3. **生成繁體中文摘要**
-   - 自適應內容結構
-   - 提取 5-10 個核心概念
-   - 可選的 Mermaid 圖表
-   - 保留原文重要圖片
+### 方式一：從 GitHub 安裝（推薦）
 
-4. **智能標籤管理**
-   - 搜尋現有 Notion 資料庫標籤
-   - 自動生成 3-5 個候選標籤
-   - 優先匹配現有標籤
-   - 必要時創建新標籤
-
-5. **上傳至 Notion**
-   - 創建新頁面
-   - 設定標題、標籤、來源 URL
-   - 添加結構化內容區塊
-
-## Plugin 配置說明
-
-### plugin.json 結構
-
-```json
-{
-  "name": "doc-summary-notion",
-  "version": "1.0.0",
-  "description": "分析文檔並生成繁體中文摘要，自動上傳至 Notion AI Documents 資料庫",
-  "author": {
-    "name": "Kevin Hu",
-    "email": "your-email@example.com"
-  },
-  "commands": [
-    "./commands/doc-summary.md"
-  ],
-  "mcpServers": {
-    "notionApi": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-notion"],
-      "env": {
-        "NOTION_API_KEY": "${NOTION_API_KEY}"
-      }
-    }
-  }
-}
-```
-
-### marketplace.json 結構
-
-```json
-{
-  "name": "kevin-claude-marketplace",
-  "description": "Kevin 的 Claude Code Plugin Marketplace",
-  "owner": {
-    "name": "Kevin Hu"
-  },
-  "plugins": [
-    {
-      "name": "doc-summary-notion",
-      "source": ".",
-      "description": "分析文檔並生成繁體中文摘要",
-      "category": "productivity",
-      "tags": ["notion", "documentation", "chinese", "ai"]
-    }
-  ]
-}
-```
-
-## 開發指南
-
-### 新增其他 Plugins
-
-1. 在 `.claude-plugin/marketplace.json` 的 `plugins` 陣列中新增：
-
-```json
-{
-  "name": "your-plugin-name",
-  "source": "./path/to/plugin",
-  "description": "Plugin 描述",
-  "version": "1.0.0"
-}
-```
-
-2. 若 plugin 在子目錄，需包含獨立的 `.claude-plugin/plugin.json`
-
-3. 更新 marketplace：
+1. **添加 marketplace：**
 ```bash
-/plugin marketplace update kevin-claude-marketplace
+/plugin marketplace add hongwei0417/kevin-marketplace
 ```
 
-### 修改現有命令
-
-1. 編輯 `commands/doc-summary.md`
-2. 更新 `plugin.json` 中的版本號
-3. 重新載入 plugin：
+2. **瀏覽並安裝 plugin：**
 ```bash
-/plugin reload doc-summary-notion
+/plugin
 ```
+然後從列表中選擇想要的 plugin 安裝。
 
-### 添加新的 MCP Servers
-
-在 `plugin.json` 的 `mcpServers` 中添加：
-
-```json
-{
-  "mcpServers": {
-    "your-server-name": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-name"],
-      "env": {
-        "API_KEY": "${YOUR_API_KEY}"
-      }
-    }
-  }
-}
-```
-
-## 發布到 GitHub
-
-1. **初始化 Git 並推送**：
-
+3. **或直接安裝特定 plugin：**
 ```bash
-git init
-git add .
-git commit -m "Initial commit: Doc Summary Notion plugin"
-git branch -M main
-git remote add origin https://github.com/yourusername/claude-marketplace.git
-git push -u origin main
+/plugin install doc-summary-notion@kevin-claude-marketplace
 ```
 
-2. **在 GitHub 上創建 Release**（可選但推薦）：
+### 方式二：從本地安裝（開發測試）
 
-- 訪問 repository 的 Releases 頁面
-- 點擊 "Create a new release"
-- 設定版本標籤（如 `v1.0.0`）
-- 填寫發布說明
-
-3. **分享給他人**：
-
-其他用戶可以通過以下方式安裝：
-
+1. **克隆此 repository：**
 ```bash
-/plugin marketplace add yourusername/claude-marketplace
+git clone https://github.com/hongwei0417/kevin-marketplace.git
+cd kevin-marketplace
 ```
 
-## 團隊使用
+2. **在 Claude Code 中安裝：**
+```bash
+/plugin marketplace add /path/to/kevin-marketplace
+```
 
-### 自動安裝 Marketplace
+---
+
+## 為團隊配置
+
+### 自動載入 Marketplace
 
 在專案的 `.claude/settings.json` 中配置：
 
 ```json
 {
   "extraKnownMarketplaces": [
-    "yourusername/claude-marketplace"
+    "hongwei0417/kevin-marketplace"
   ]
 }
 ```
@@ -292,32 +118,239 @@ git push -u origin main
 }
 ```
 
-## 疑難排解
+---
 
-### Notion API 連接失敗
+## 開發指南
 
-- 確認 `NOTION_API_KEY` 環境變數已設定
-- 檢查 Notion integration 是否有資料庫存取權限
-- 確認資料庫已分享給 integration
+### 添加新的 Plugin
 
-### 命令無法執行
+#### 1. 使用模板創建新 plugin
 
-- 執行 `/plugin` 確認 plugin 已安裝並啟用
-- 檢查 `commands/doc-summary.md` 的 frontmatter 配置
-- 查看 Claude Code 錯誤訊息
+```bash
+# 複製模板目錄
+cp -r plugins/_template plugins/your-plugin-name
 
-### MCP Server 啟動失敗
+# 編輯 plugin.json
+nano plugins/your-plugin-name/.claude-plugin/plugin.json
 
-- 確認 Node.js 已安裝（需要 npx 命令）
-- 執行 `npx -y @modelcontextprotocol/server-notion` 測試安裝
+# 編輯命令文件
+nano plugins/your-plugin-name/commands/your-command.md
+```
+
+#### 2. 更新 marketplace.json
+
+在 `.claude-plugin/marketplace.json` 的 `plugins` 陣列中添加：
+
+```json
+{
+  "name": "your-plugin-name",
+  "source": "./plugins/your-plugin-name",
+  "description": "Plugin 的簡短描述",
+  "version": "1.0.0",
+  "author": {
+    "name": "Your Name"
+  },
+  "keywords": ["keyword1", "keyword2"],
+  "category": "productivity",
+  "tags": ["tag1", "tag2"]
+}
+```
+
+#### 3. 創建 plugin README
+
+在 `plugins/your-plugin-name/README.md` 中撰寫詳細文檔：
+- 功能說明
+- 安裝步驟
+- 使用範例
+- 環境配置需求
+
+#### 4. 測試你的 plugin
+
+```bash
+# 從本地安裝測試
+/plugin marketplace add /path/to/kevin-marketplace
+
+# 測試命令
+/your-command
+```
+
+### Plugin 結構規範
+
+每個 plugin 必須包含：
+
+```
+plugins/your-plugin-name/
+├── .claude-plugin/
+│   └── plugin.json          # Plugin 配置（必須）
+├── commands/
+│   └── your-command.md      # 命令定義（至少一個）
+└── README.md                # 文檔說明（建議）
+```
+
+#### plugin.json 欄位說明
+
+```json
+{
+  "name": "plugin-name",              // Plugin 唯一識別名稱
+  "version": "1.0.0",                 // 版本號（語意化版本）
+  "description": "簡短描述",           // 一句話說明
+  "author": {                         // 作者資訊
+    "name": "Your Name",
+    "email": "your@email.com"
+  },
+  "homepage": "https://...",          // 專案首頁
+  "repository": "https://...",        // Git repository
+  "license": "MIT",                   // 授權方式
+  "keywords": ["keyword"],            // 關鍵字
+  "commands": ["./commands/cmd.md"], // 命令文件路徑
+  "mcpServers": {}                   // MCP 伺服器配置（選填）
+}
+```
+
+#### 命令文件 (commands/*.md) 規範
+
+使用 frontmatter 定義命令：
+
+```markdown
+---
+description: Command description
+argument-hint: <required-arg> [optional-arg]
+allowed-tools:
+  - ToolName1
+  - ToolName2
+---
+
+# Command Title
+
+Command implementation details...
+```
+
+### 添加 MCP Servers
+
+如果你的 plugin 需要使用 MCP servers，在 `plugin.json` 中配置：
+
+```json
+{
+  "mcpServers": {
+    "server-name": {
+      "command": "npx",
+      "args": ["-y", "@org/mcp-server-package"],
+      "env": {
+        "API_KEY": "${YOUR_API_KEY}"
+      }
+    }
+  }
+}
+```
+
+用戶需要在環境中設定對應的環境變數。
+
+---
+
+## 發布流程
+
+### 1. 更新版本號
+
+- 更新 `plugin.json` 中的 `version`
+- 更新 `marketplace.json` 中對應 plugin 的 `version`
+- 在 plugin README 中記錄變更
+
+### 2. 提交變更
+
+```bash
+git add .
+git commit -m "feat: add new plugin or update existing plugin"
+git push origin main
+```
+
+### 3. 創建 Release（建議）
+
+在 GitHub 上創建 release：
+- 使用語意化版本標籤（如 `v1.2.0`）
+- 在 release notes 中說明變更內容
+- 這有助於用戶追蹤 marketplace 的更新
+
+### 4. 通知用戶更新
+
+用戶可以通過以下方式更新：
+
+```bash
+/plugin marketplace update kevin-claude-marketplace
+```
+
+---
+
+## 貢獻指南
+
+歡迎貢獻新的 plugins 或改進現有 plugins！
+
+### 提交 Pull Request
+
+1. Fork 此 repository
+2. 創建 feature branch (`git checkout -b feature/amazing-plugin`)
+3. 按照上述開發指南添加你的 plugin
+4. 確保包含完整的 README 和範例
+5. 提交 PR，說明 plugin 的功能和用途
+
+### 程式碼規範
+
+- 使用清晰的命令和變數命名
+- 為複雜邏輯添加註解
+- 提供完整的使用範例
+- 確保命令的 `allowed-tools` 列表準確
+
+---
+
+## 常見問題
+
+### Q: 如何更新已安裝的 plugin？
+
+```bash
+/plugin marketplace update kevin-claude-marketplace
+```
+
+### Q: 如何卸載 plugin？
+
+```bash
+/plugin uninstall plugin-name
+```
+
+### Q: Plugin 安裝後無法使用？
+
+1. 檢查 plugin 是否已啟用：`/plugin`
+2. 確認環境變數已正確設定
+3. 查看 Claude Code 的錯誤訊息
+4. 參考 plugin 的 README 確認配置需求
+
+### Q: 如何禁用某個 plugin？
+
+在 `.claude/settings.json` 中：
+
+```json
+{
+  "plugins": {
+    "plugin-name@kevin-claude-marketplace": false
+  }
+}
+```
+
+### Q: MCP Server 無法啟動？
+
+- 確認已安裝 Node.js
 - 檢查網路連接
+- 驗證環境變數是否正確設定
+- 嘗試手動執行 MCP server 命令測試
+
+---
 
 ## 相關資源
 
-- [Claude Code Plugins 官方文檔](https://docs.claude.com/en/docs/claude-code/plugins)
+- [Claude Code 官方文檔](https://docs.claude.com/en/docs/claude-code)
+- [Plugin 開發指南](https://docs.claude.com/en/docs/claude-code/plugins)
 - [Plugin Marketplaces 指南](https://docs.claude.com/en/docs/claude-code/plugin-marketplaces)
-- [Notion API 文檔](https://developers.notion.com/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
+
+---
 
 ## 授權
 
@@ -325,12 +358,19 @@ MIT License
 
 ## 作者
 
-Kevin Hu - [GitHub](https://github.com/yourusername)
-
-## 貢獻
-
-歡迎提交 Issues 和 Pull Requests！
+Kevin Hu - [GitHub](https://github.com/hongwei0417)
 
 ---
 
-如有問題或建議，請在 [GitHub Issues](https://github.com/yourusername/claude-marketplace/issues) 中提出。
+## Changelog
+
+### v1.0.0 (2025-01-XX)
+
+- 初始版本發布
+- 新增 Doc Summary Notion plugin
+- 建立 marketplace 結構
+- 提供 plugin 開發模板
+
+---
+
+如有問題或建議，請在 [GitHub Issues](https://github.com/hongwei0417/kevin-marketplace/issues) 中提出。

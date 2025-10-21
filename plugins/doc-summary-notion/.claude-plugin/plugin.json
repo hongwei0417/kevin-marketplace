@@ -7,19 +7,16 @@
 		"email": "iamhongwei0417@gmail.com"
 	},
 	"homepage": "https://github.com/hongwei0417/kevin-marketplace.git",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/hongwei0417/kevin-marketplace.git"
-	},
+	"repository": "https://github.com/hongwei0417/kevin-marketplace.git",
 	"license": "MIT",
 	"keywords": ["documentation", "summary", "notion", "traditional-chinese", "ai-documents"],
 	"commands": ["./commands/doc-summary.md"],
 	"mcpServers": {
 		"notionApi": {
 			"command": "npx",
-			"args": ["-y", "@modelcontextprotocol/server-notion"],
+			"args": ["-y", "@notionhq/notion-mcp-server"],
 			"env": {
-				"NOTION_API_KEY": "${NOTION_API_KEY}"
+				"NOTION_TOKEN": "${NOTION_TOKEN}"
 			}
 		}
 	}
