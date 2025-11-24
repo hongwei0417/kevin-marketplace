@@ -55,6 +55,41 @@ kevin-marketplace/
 
 ---
 
+### 2. RFC Manager
+
+管理 Moxa 前端團隊的 RFC（Request for Comments）完整流程，包含提案創建、討論管理、投票決策、文檔歸檔和實施追蹤。
+
+**功能特色：**
+- 📝 RFC 提案管理 - 使用標準化模板創建 GitLab Issue
+- 💬 討論追蹤 - 監控和管理 RFC 討論流程
+- 🗳️ 投票決策 - 管理 emoji 投票和結果統計
+- 📦 文檔歸檔 - 自動化歸檔已接受/拒絕的 RFC
+- 📊 實施追蹤 - 連結 Jira Epic 追蹤實施進度
+- 🏷️ 標籤管理 - 智能化的標籤分類和應用
+- 🔄 完整工作流 - 端到端的 RFC 生命週期管理
+
+**使用方式：**
+```bash
+# 啟動 RFC Manager
+/rfc-manager
+
+# 可用操作：
+# - 創建新的 RFC 提案
+# - 管理 RFC 討論
+# - 進行投票和決策
+# - 歸檔 RFC 決議
+# - 追蹤實施進度
+```
+
+**前置需求：**
+- GitLab Personal Access Token
+- GitLab API URL 配置
+- Moxa GitLab 專案 `moxa/sw/f2e/one/one-rfcs` 的存取權限
+
+詳細說明請參考：[plugins/rfc-manager/README.md](plugins/rfc-manager/)
+
+---
+
 ## 安裝方式
 
 ### 方式一：從 GitHub 安裝（推薦）

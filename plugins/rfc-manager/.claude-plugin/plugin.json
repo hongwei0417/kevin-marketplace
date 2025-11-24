@@ -1,0 +1,24 @@
+{
+	"name": "rfc-manager",
+	"version": "1.0.0",
+	"description": "管理 Moxa 前端團隊的 RFC（Request for Comments）流程，包含提案、討論、投票、歸檔和追蹤功能",
+	"author": {
+		"name": "Kevin Hu",
+		"email": "iamhongwei0417@gmail.com"
+	},
+	"homepage": "https://github.com/hongwei0417/kevin-marketplace",
+	"repository": "https://github.com/hongwei0417/kevin-marketplace",
+	"license": "MIT",
+	"keywords": ["rfc", "gitlab", "workflow", "decision-making", "team-collaboration"],
+	"commands": ["./commands/rfc-manager.md"],
+	"mcpServers": {
+		"gitlab": {
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-gitlab"],
+			"env": {
+				"GITLAB_PERSONAL_ACCESS_TOKEN": "${GITLAB_PERSONAL_ACCESS_TOKEN}",
+				"GITLAB_API_URL": "${GITLAB_API_URL}"
+			}
+		}
+	}
+}

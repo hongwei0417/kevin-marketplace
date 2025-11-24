@@ -1,6 +1,6 @@
 {
 	"name": "kevin-claude-marketplace",
-	"description": "Kevin 的 Claude Code Plugin Marketplace - 包含文檔摘要和 Notion 整合工具",
+	"description": "Kevin 的 Claude Code Plugin Marketplace - 包含文檔摘要、Notion 整合和 RFC 管理工具",
 	"owner": {
 		"name": "Kevin Hu",
 		"email": "iamhongwei0417@gmail.com",
@@ -19,6 +19,18 @@
 			"keywords": ["documentation", "summary", "notion", "traditional-chinese", "ai-documents"],
 			"category": "productivity",
 			"tags": ["notion", "documentation", "chinese", "ai"]
+		},
+		{
+			"name": "rfc-manager",
+			"source": "./plugins/rfc-manager",
+			"description": "管理 Moxa 前端團隊的 RFC（Request for Comments）流程，包含提案、討論、投票、歸檔和追蹤功能",
+			"version": "1.0.0",
+			"author": {
+				"name": "Kevin Hu"
+			},
+			"keywords": ["rfc", "gitlab", "workflow", "decision-making", "team-collaboration"],
+			"category": "productivity",
+			"tags": ["gitlab", "rfc", "workflow", "team"]
 		}
 	]
 }
