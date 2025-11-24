@@ -1,22 +1,17 @@
 ---
-description: Manage RFC (Request for Comments) processes for the Moxa frontend team. Use when creating RFC proposals, managing RFC discussions and voting, archiving RFC decisions, or tracking RFC implementation status in GitLab.
-argument-hint: <action> [rfc-id] [additional-params]
-allowed-tools:
-  - mcp__gitlab__*
-  - Read
-  - Write
-  - Bash
+name: rfc-manager
+description: This skill should be used when managing RFC (Request for Comments) processes for the Moxa frontend team. Use when creating RFC proposals, managing RFC discussions and voting, archiving RFC decisions, or tracking RFC implementation status in GitLab.
 ---
 
 # RFC Manager
 
 ## Overview
 
-Manage the complete RFC (Request for Comments) lifecycle for the Moxa frontend team's one-rfcs GitLab project (moxa/sw/f2e/one/one-rfcs). This command provides structured workflows for proposing technical decisions, facilitating team discussions, managing voting processes, archiving decisions, and tracking implementation.
+Manage the complete RFC (Request for Comments) lifecycle for the Moxa frontend team's one-rfcs GitLab project (moxa/sw/f2e/one/one-rfcs). This skill provides structured workflows for proposing technical decisions, facilitating team discussions, managing voting processes, archiving decisions, and tracking implementation.
 
-## When to Use This Command
+## When to Use This Skill
 
-Use this command when:
+Use this skill when:
 - Creating a new RFC proposal in GitLab Issues
 - Managing RFC discussion and review processes
 - Conducting RFC voting and decision-making
@@ -177,7 +172,7 @@ After archiving accepted RFCs:
 
 ## GitLab MCP Integration
 
-This command relies heavily on GitLab MCP tools. Key operations:
+This skill relies heavily on GitLab MCP tools. Key operations:
 
 **Issue Operations:**
 - `mcp__gitlab__create_issue` - Create RFC proposals

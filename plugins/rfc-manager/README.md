@@ -70,90 +70,55 @@ git clone https://github.com/hongwei0417/kevin-marketplace.git
 
 ## 使用方式
 
-### 基本命令
+### 啟用 Skill
 
-```bash
-# 啟動 RFC Manager
-/rfc-manager
+這是一個 **skill**，不是 command。當你需要管理 RFC 流程時，直接告訴 Claude 即可，它會自動調用這個 skill。
+
+### 使用場景
+
+當你需要進行以下操作時，Claude 會自動使用 rfc-manager skill：
+
+#### 1. 創建新的 RFC 提案
+
+```
+你：幫我創建一個新的 RFC 提案，關於前端架構優化
+Claude：[調用 rfc-manager skill，使用模板引導你完成提案創建]
 ```
 
-執行命令後，你可以進行以下操作：
+#### 2. 管理 RFC 討論
 
-### 1. 創建新的 RFC 提案
-
-```bash
-/rfc-manager create proposal
+```
+你：查看 RFC #123 的討論狀態
+Claude：[調用 rfc-manager skill，檢視討論串並總結關鍵點]
 ```
 
-這會引導你完成以下步驟：
-1. 使用 RFC 提案模板填寫內容
-2. 在 GitLab 創建 Issue
-3. 設定適當的標籤和參與者
-4. 設定討論時間軸（開始日期和截止日期）
+#### 3. 進行投票和決策
 
-**範例流程：**
 ```
-User: /rfc-manager
-Assistant: 我會幫你管理 RFC 流程。你想要：
-1. 創建新的 RFC 提案
-2. 管理現有 RFC 討論
-3. 進行 RFC 投票
-4. 歸檔 RFC 決議
-5. 追蹤 RFC 實施
-
-User: 創建新的 RFC 提案
-Assistant: [使用模板引導創建流程，並在 GitLab 創建 Issue]
+你：RFC #123 的討論期結束了，幫我啟動投票
+Claude：[調用 rfc-manager skill，統計投票並記錄決議]
 ```
 
-### 2. 管理 RFC 討論
+#### 4. 歸檔 RFC 決議
 
-```bash
-/rfc-manager manage discussion <issue-id>
+```
+你：RFC #123 已經通過了，幫我歸檔
+Claude：[調用 rfc-manager skill，自動化歸檔流程]
 ```
 
-功能包括：
-- 檢視所有討論串和評論
-- 總結關鍵討論點
-- 識別共識和分歧
-- 協助回應問題和意見
+#### 5. 追蹤實施進度
 
-### 3. 進行投票和決策
-
-```bash
-/rfc-manager conduct voting <issue-id>
+```
+你：追蹤 RFC #123 的實施進度
+Claude：[調用 rfc-manager skill，連結 Jira 並追蹤進度]
 ```
 
-這會：
-1. 確認討論期已結束
-2. 啟動 48 小時投票期
-3. 統計 emoji 投票（👍 贊成、👎 反對、👀 棄權）
-4. 計算結果並記錄決議
+### Skill 自動調用
 
-### 4. 歸檔 RFC 決議
-
-```bash
-/rfc-manager archive <issue-id>
-```
-
-自動化歸檔流程：
-1. 創建歸檔分支
-2. 使用歸檔模板生成文檔
-3. 將文檔放置到正確位置（`archived/accepted/` 或 `archived/rejected/`）
-4. 創建 Merge Request
-5. 更新 Issue 狀態和標籤
-6. 關閉 Issue
-
-### 5. 追蹤實施進度
-
-```bash
-/rfc-manager track implementation <issue-id>
-```
-
-用於已接受的 RFC：
-- 創建或連結 Jira Epic
-- 追蹤實施里程碑
-- 報告阻塞問題
-- 建議必要的修改
+rfc-manager 會在以下情況自動被調用：
+- 當你提到「RFC」、「提案」、「投票」等關鍵字時
+- 當你在管理 GitLab 上的 `moxa/sw/f2e/one/one-rfcs` 專案時
+- 當你需要創建、討論、投票、歸檔或追蹤 RFC 時
 
 ## RFC 生命週期
 
@@ -178,9 +143,9 @@ Plugin 包含以下資源：
 ```
 plugins/rfc-manager/
 ├── .claude-plugin/
-│   └── plugin.json           # Plugin 配置
-├── commands/
-│   └── rfc-manager.md        # 主要命令定義
+│   └── plugin.json                 # Plugin 配置（含 GitLab MCP Server）
+├── skills/
+│   └── rfc-manager.md              # RFC Manager Skill 定義
 ├── assets/
 │   ├── rfc-proposal-template.md    # RFC 提案模板
 │   └── rfc-archive-template.md     # RFC 歸檔模板

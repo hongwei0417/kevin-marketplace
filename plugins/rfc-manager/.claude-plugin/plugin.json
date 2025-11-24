@@ -10,7 +10,7 @@
 	"repository": "https://github.com/hongwei0417/kevin-marketplace",
 	"license": "MIT",
 	"keywords": ["rfc", "gitlab", "workflow", "decision-making", "team-collaboration"],
-	"commands": ["./commands/rfc-manager.md"],
+	"skills": ["./skills/rfc-manager.md"],
 	"mcpServers": {
 		"gitlab": {
 			"command": "npx",
