@@ -11,14 +11,5 @@
 	"license": "MIT",
 	"keywords": ["rfc", "gitlab", "workflow", "decision-making", "team-collaboration"],
 	"skills": ["./skills/rfc-manager.md"],
-	"mcpServers": {
-		"gitlab": {
-			"command": "npx",
-			"args": ["-y", "@zereight/mcp-gitlab"],
-			"env": {
-				"GITLAB_PERSONAL_ACCESS_TOKEN": "${GITLAB_PERSONAL_ACCESS_TOKEN}",
-				"GITLAB_READ_ONLY_MODE": "false"
-			}
-		}
-	}
+	"mcpServers": {}
 }

@@ -31,6 +31,18 @@
 			"keywords": ["rfc", "gitlab", "workflow", "decision-making", "team-collaboration"],
 			"category": "productivity",
 			"tags": ["gitlab", "rfc", "workflow", "team"]
+		},
+		{
+			"name": "git-workflow",
+			"source": "./plugins/git-workflow",
+			"description": "完整的 Git 工作流程命令集，包含分支管理、提交、程式碼審查和 PR 工作流程",
+			"version": "1.0.0",
+			"author": {
+				"name": "Kevin Hu"
+			},
+			"keywords": ["git", "workflow", "branch", "commit", "pr", "code-review"],
+			"category": "developer-tools",
+			"tags": ["git", "workflow", "branch", "commit", "pr"]
 		}
 	]
 }
