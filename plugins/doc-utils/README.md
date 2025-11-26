@@ -21,7 +21,7 @@
 /plugin marketplace add hongwei0417/kevin-marketplace
 
 # 安裝此 plugin
-/plugin install doc-summary-notion@kevin-claude-marketplace
+/plugin install doc-utils@kevin-claude-marketplace
 ```
 
 ### 從本地安裝（開發測試）
@@ -29,7 +29,7 @@
 ```bash
 git clone https://github.com/hongwei0417/kevin-marketplace.git
 /plugin marketplace add /path/to/kevin-marketplace
-/plugin install doc-summary-notion@kevin-claude-marketplace
+/plugin install doc-utils@kevin-claude-marketplace
 ```
 
 ## 環境配置
@@ -286,7 +286,7 @@ done
 ```json
 {
   "plugins": {
-    "doc-summary-notion@kevin-claude-marketplace": true
+    "doc-utils@kevin-claude-marketplace": true
   },
   "env": {
     "NOTION_TOKEN": "your_token_here"

@@ -9,8 +9,8 @@
 	"homepage": "https://github.com/hongwei0417/kevin-marketplace",
 	"plugins": [
 		{
-			"name": "doc-summary-notion",
-			"source": "./plugins/doc-summary-notion",
+			"name": "doc-utils",
+			"source": "./plugins/doc-utils",
 			"description": "分析文檔並生成繁體中文摘要，自動上傳至 Notion AI Documents 資料庫",
 			"version": "1.0.0",
 			"author": {
