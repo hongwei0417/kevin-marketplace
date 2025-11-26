@@ -2,7 +2,6 @@
 allowed-tools: Bash(git branch:*), Bash(git checkout:*), Bash(git worktree:*), Bash(git status:*), Bash(git diff:*), Bash(basename:*), Bash(pwd:*), AskUserQuestion
 argument-hint: [description]
 description: Create a new git branch from description, with optional worktree setup
-model: sonnet
 ---
 
 # Create Git Branch from Description
@@ -28,9 +27,11 @@ Create a well-named git branch based on the provided description (or auto-genera
 ### 0. Determine Description Source
 
 **If description is provided ($ARGUMENTS is not empty):**
+
 - Use the provided description directly
 
 **If no description provided ($ARGUMENTS is empty):**
+
 - Analyze uncommitted changes using `git diff` and `git status`
 - Review modified files and their changes
 - Generate a description based on:
@@ -49,6 +50,7 @@ Create a well-named git branch based on the provided description (or auto-genera
 Analyze the description (provided or auto-generated) and create a branch name following these conventions:
 
 **Branch Naming Patterns:**
+
 - `feature/<name>` - For new features or enhancements
 - `fix/<name>` - For bug fixes
 - `refactor/<name>` - For code refactoring
@@ -59,6 +61,7 @@ Analyze the description (provided or auto-generated) and create a branch name fo
 - `experiment/<name>` - For experimental work
 
 **Branch Name Guidelines:**
+
 - Use lowercase letters and hyphens
 - Keep it concise but descriptive (2-5 words)
 - Use present tense verbs when applicable
@@ -72,6 +75,7 @@ Analyze the description (provided or auto-generated) and create a branch name fo
 ### 2. Validate Branch Name
 
 Before creating the branch:
+
 - Check if a branch with the same name already exists
 - Ensure the name follows conventions
 - Verify no special characters that could cause issues
@@ -82,12 +86,14 @@ Before creating the branch:
 Use the AskUserQuestion tool to ask the user which approach they prefer:
 
 **Option 1: Create Branch Only**
+
 - Creates a new branch from the current branch
 - Switches to the new branch
 - Keeps working in the current directory
 - Best for: Quick feature work, simple changes
 
 **Option 2: Create Branch with Worktree**
+
 - Creates a new branch
 - Sets up a separate worktree directory
 - Allows parallel work on multiple branches
@@ -96,11 +102,13 @@ Use the AskUserQuestion tool to ask the user which approach they prefer:
 ### 4. Execute Creation
 
 **For Branch Only:**
+
 ```bash
 git checkout -b <branch-name>
 ```
 
 **For Branch with Worktree:**
+
 ```bash
 # Determine worktree location using naming convention:
 # [project-name].worktrees.[branch-name]
@@ -114,6 +122,7 @@ git worktree add ../${PROJECT_NAME}.worktrees.${BRANCH_NAME} -b ${BRANCH_NAME}
 ```
 
 **Worktree Naming Convention:**
+
 - Format: `<project-name>.worktrees.<branch-name>` (branch name preserved as-is)
 - The worktree directory is created at the same level as the project directory
 - Branch slashes create subdirectories automatically
@@ -135,6 +144,7 @@ git worktree add ../${PROJECT_NAME}.worktrees.${BRANCH_NAME} -b ${BRANCH_NAME}
 ### 5. Provide Next Steps
 
 After creation, inform the user of:
+
 - The created branch name
 - Current location (for worktree: the new directory path)
 - Suggested next steps
@@ -143,12 +153,14 @@ After creation, inform the user of:
 ## Worktree Management
 
 ### Worktree Benefits
+
 - Work on multiple features simultaneously
 - Keep separate build artifacts per branch
 - Avoid git stash/checkout cycle
 - Independent node_modules/dependencies per worktree
 
 ### Worktree Directory Structure
+
 ```
 parent-directory/
 ├── my-project/                          # Main repository
@@ -162,6 +174,7 @@ parent-directory/
 ```
 
 ### Managing Worktrees
+
 ```bash
 # List all worktrees
 git worktree list
@@ -179,6 +192,7 @@ cd ../<project-name>.worktrees.<branch-name>
 ## Safety Checks
 
 Before creating:
+
 - Ensure working directory is clean (or stash changes if needed)
 - Verify git repository is initialized
 - Check for adequate disk space (for worktree option)
@@ -187,6 +201,7 @@ Before creating:
 ## Examples
 
 ### Example 1: Feature Branch with Description
+
 ```
 Input: "add dark mode toggle"
 Generated branch: feature/add-dark-mode-toggle
@@ -195,6 +210,7 @@ If worktree: Creates ../my-project.worktrees.feature/add-dark-mode-toggle/
 ```
 
 ### Example 2: Bug Fix with Description
+
 ```
 Input: "fix memory leak in parser"
 Generated branch: fix/memory-leak-parser
@@ -203,6 +219,7 @@ If worktree: Creates ../my-project.worktrees.fix/memory-leak-parser/
 ```
 
 ### Example 3: Auto-generated from Code Changes
+
 ```
 Input: (no description provided)
 Detected changes: Modified src/components/Theme.tsx, added dark mode logic
@@ -213,6 +230,7 @@ If worktree: Creates ../my-project.worktrees.feature/add-dark-mode-support/
 ```
 
 ### Example 4: Auto-generated from Bug Fix
+
 ```
 Input: (no description provided)
 Detected changes: Fixed null pointer in src/parser/index.ts
@@ -223,6 +241,7 @@ If worktree: Creates ../my-project.worktrees.fix/parser-null-pointer/
 ```
 
 ### Example 5: Documentation Update
+
 ```
 Input: "update API documentation"
 Generated branch: docs/update-api
@@ -233,12 +252,14 @@ If worktree: Creates ../my-project.worktrees.docs/update-api/
 ## Best Practices
 
 ### When to Use Branch Only
+
 - Quick fixes or small features
 - Short-lived branches (< 1 day)
 - Single focus work
 - Limited context switching
 
 ### When to Use Worktree
+
 - Long-running feature development
 - Need to switch between features frequently
 - Maintaining multiple versions simultaneously
@@ -246,6 +267,7 @@ If worktree: Creates ../my-project.worktrees.docs/update-api/
 - Working on features that require different Node versions
 
 ### Branch Hygiene
+
 - Create branches from an up-to-date main/master
 - Keep branch names descriptive but concise
 - Delete branches after merging
@@ -256,19 +278,23 @@ If worktree: Creates ../my-project.worktrees.docs/update-api/
 ### Common Issues
 
 **Branch name already exists:**
+
 - Suggest variations or numbered suffixes
 - Ask if user wants to checkout existing branch
 
 **Working directory not clean:**
+
 - Offer to stash changes
 - Show unstaged changes
 - Ask user to commit or discard
 
 **Insufficient disk space (worktree):**
+
 - Fall back to branch-only option
 - Suggest cleanup of old worktrees
 
 **Not in a git repository:**
+
 - Provide clear error message
 - Guide user to initialize git if needed
 
@@ -277,12 +303,14 @@ If worktree: Creates ../my-project.worktrees.docs/update-api/
 ### After Work is Complete
 
 For branch only:
+
 ```bash
 git checkout main
 git branch -d <branch-name>
 ```
 
 For worktree:
+
 ```bash
 # Remove worktree from main repo
 git worktree remove ../<project-name>.worktrees.<branch-name>
@@ -298,10 +326,13 @@ git branch -d <branch-name>
 ## Integration Tips
 
 ### With /commit Command
+
 After creating a branch, use `/commit` to make structured commits
 
 ### With /create-pr Command
+
 When ready, create a pull request from the new branch
 
 ### With /branch-cleanup Command
+
 Regularly clean up merged branches and removed worktrees
