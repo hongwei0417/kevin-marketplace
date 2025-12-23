@@ -1,6 +1,6 @@
 ---
 name: rfc-manager
-description: This skill should be used when managing RFC (Request for Comments) processes for the Moxa frontend team. Use when creating RFC proposals, managing RFC discussions and voting, archiving RFC decisions, or tracking RFC implementation status in GitLab.
+description: Manage RFC (Request for Comments) lifecycle for the Moxa frontend team's GitLab project. Use when creating RFC proposals, managing RFC discussions and voting, archiving RFC decisions, or tracking implementation status. Triggers on mentions of "RFC", "proposal", "team decision", "one-rfcs", "voting", or "archive RFC".
 ---
 
 # RFC Manager
@@ -33,8 +33,8 @@ The RFC process follows a structured lifecycle from proposal to implementation. 
 When creating a new RFC proposal:
 
 1. **Prepare RFC Content**
-   - Use the RFC proposal template from `assets/rfc-proposal-template.md`
-   - Fill all required sections (🟢 marked in template):
+   - Use the RFC proposal template from [templates/rfc-proposal-template.md](templates/rfc-proposal-template.md)
+   - Fill all required sections (marked in template):
      - RFC information (proposer, participants, date)
      - Problem/motivation description
      - Solution approach
@@ -63,7 +63,7 @@ When creating a new RFC proposal:
      - `due_date`: Discussion end date (2-3 weeks, max 1 month)
    - Update status from "To Do" to "In progress"
 
-**Reference:** For detailed label usage, see `references/labels-guide.md`
+**Reference:** For detailed label usage, see [references/labels-guide.md](references/labels-guide.md)
 
 ### Phase 2: Managing Discussion and Review
 
@@ -85,7 +85,7 @@ During the discussion phase:
    - Ensure key participants have reviewed
    - Verify discussion period is complete
 
-**Reference:** For complete RFC workflow, see `references/rfc-workflow.md`
+**Reference:** For complete RFC workflow, see [references/rfc-workflow.md](references/rfc-workflow.md)
 
 ### Phase 3: Conducting Voting and Decision
 
@@ -111,7 +111,7 @@ After discussion period ends:
      - Key decision rationale
      - Next steps
 
-**Reference:** For voting and closing process, see `references/rfc-workflow.md` section "RFC 結案流程"
+**Reference:** For voting and closing process, see [references/rfc-workflow.md](references/rfc-workflow.md) section "RFC 結案流程"
 
 ### Phase 4: Archiving RFC Decisions
 
@@ -122,7 +122,7 @@ After voting decision:
    - Branch name format: `rfc-{issue-id}-archive`
 
 2. **Prepare Archive Document**
-   - Use template from `assets/rfc-archive-template.md`
+   - Use template from [templates/rfc-archive-template.md](templates/rfc-archive-template.md)
    - Fill in:
      - RFC number (Issue ID)
      - Final status (Accepted/Rejected)
@@ -225,8 +225,8 @@ mcp__gitlab__create_merge_request(
 
 ### references/
 Contains detailed RFC workflow documentation:
-- `rfc-workflow.md` - Complete RFC process with all phases
-- `labels-guide.md` - Label usage and categorization rules
+- [references/rfc-workflow.md](references/rfc-workflow.md) - Complete RFC process with all phases
+- [references/labels-guide.md](references/labels-guide.md) - Label usage and categorization rules
 
 Load these references when:
 - User asks about specific workflow steps
@@ -234,10 +234,10 @@ Load these references when:
 - Label selection guidance required
 - Archive process details needed
 
-### assets/
+### templates/
 Contains templates for RFC documents:
-- `rfc-proposal-template.md` - Template for creating new RFC Issues
-- `rfc-archive-template.md` - Template for archiving RFC decisions
+- [templates/rfc-proposal-template.md](templates/rfc-proposal-template.md) - Template for creating new RFC Issues
+- [templates/rfc-archive-template.md](templates/rfc-archive-template.md) - Template for archiving RFC decisions
 
 Use these templates to:
 - Generate RFC Issue descriptions
