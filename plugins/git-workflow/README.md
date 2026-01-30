@@ -1,13 +1,14 @@
-# Git Workflow Plugin
+# Git Workflow Plugin v2.0
 
-完整的 Git 工作流程命令集，提供分支管理、提交、程式碼審查和 PR 工作流程的自動化功能。
+Integrated Git workflow plugin providing create-branch → commit → create-pr flow with fork cross-project MR support.
 
 ## 功能特色
 
-- **智慧分支管理**：自動命名、建立 worktree、清理合併的分支
-- **規範化提交**：使用 Conventional Commit 格式和 emoji
-- **全面程式碼審查**：多角度審查（產品、開發、QA、安全、DevOps、UI/UX）
-- **PR 工作流程**：自動建立分支、提交和 Pull Request
+- **一次性設定**：開始前收集所有設定，然後一次執行完畢
+- **不中斷執行**：Git 操作（create-branch → commit → create-pr）連續執行
+- **彈性目標分支**：Create PR 支援選擇任意目標分支
+- **Fork 支援**：自動偵測 fork 場景，支援跨專案 MR
+- **GitLab 整合**：透過 GitLab MCP 和直接 API 操作
 
 ## 安裝
 
@@ -18,185 +19,169 @@
 /plugin install git-workflow@kevin-claude-marketplace
 ```
 
-## 可用命令
+## 使用方式
 
-### `/branch-cleanup`
-
-清理已合併的分支和過期的遠端參照。
+### 主命令：`/run`
 
 ```bash
-# 互動式清理
-/branch-cleanup
+# 互動式選擇模式
+/run
 
-# 預覽模式（不實際刪除）
-/branch-cleanup --dry-run
+# 全流程模式
+/run --full
 
-# 強制清理
-/branch-cleanup --force
-
-# 只清理遠端分支
-/branch-cleanup --remote-only
-
-# 只清理本地分支
-/branch-cleanup --local-only
+# 單一任務模式
+/run --step create-branch
+/run --step commit
+/run --step create-pr
 ```
 
-**功能**：
-- 識別已合併的分支
-- 檢測過期的遠端追蹤分支
-- 保護主要分支（main, master, develop 等）
-- 提供復原指令
+## 全流程模式
 
----
+流程順序：**Create Branch → Commit → Create PR**
 
-### `/code-review`
+### 執行流程
 
-進行全面的程式碼品質審查。
+```
+┌─────────────────────────────────────┐
+│          第一階段：收集設定          │
+│                                     │
+│  選擇要執行的步驟：                  │
+│  ☑ Create Branch                    │
+│  ☑ Commit                           │
+│  ☑ Create PR → Target: develop      │
+└─────────────────┬───────────────────┘
+                  │
+┌─────────────────▼───────────────────┐
+│     第二階段：依序執行（不中斷）      │
+│                                     │
+│  1. Create Branch ─────────────────→│
+│  2. Commit ────────────────────────→│
+│  3. Create PR                       │
+└─────────────────┬───────────────────┘
+                  │
+┌─────────────────▼───────────────────┐
+│          第三階段：報告結果          │
+└─────────────────────────────────────┘
+```
+
+## 各步驟說明
+
+### Create Branch
+
+建立新分支：
+
+- 根據描述或變更自動命名
+- 支援 worktree 設定
+
+### Commit
+
+提交變更（內建 `git-workflow:commit` skill）：
+
+- 審查並暫存變更
+- 自動判斷是否切分成多個 commit
+- Conventional Commit 格式
+- 確保不含敏感資訊
+
+### Create PR
+
+建立 GitLab Merge Request：
+
+- 支援選擇任意目標分支
+- 自動偵測 fork 場景
+- 同專案 MR：使用 GitLab MCP
+- 跨專案 MR：使用 GitLab API
+
+**目標分支選項：**
+```
+1. main
+2. develop
+3. <當前分支的來源分支>
+4. 自訂輸入
+```
+
+## GitLab Token 設定
+
+跨專案 MR 需要 GitLab Personal Access Token：
+
+### 方式 1：環境變數
 
 ```bash
-# 審查特定檔案
-/code-review src/components/Header.tsx
-
-# 審查特定 commit
-/code-review abc1234
-
-# 完整專案審查
-/code-review --full
+export GITLAB_PERSONAL_ACCESS_TOKEN=glpat-xxxx
 ```
 
-**審查項目**：
-- 程式碼品質和可維護性
-- 安全性漏洞
-- 效能分析
-- 架構和設計
-- 測試覆蓋率
-- 文件完整性
+### 方式 2：Claude Settings
 
----
+在 `~/.claude/settings.json` 中設定：
 
-### `/commit`
-
-建立格式化的 commit，使用 Conventional Commit 格式和 emoji。
-
-```bash
-# 自動分析變更並建立 commit
-/commit
-
-# 指定 commit 訊息
-/commit "add user authentication"
-
-# 跳過 pre-commit 檢查
-/commit --no-verify
-
-# 修改最後一個 commit
-/commit --amend
+```json
+{
+  "env": {
+    "GITLAB_PERSONAL_ACCESS_TOKEN": "glpat-xxxx"
+  }
+}
 ```
-
-**功能**：
-- 自動執行 lint、build、docs 檢查
-- 分析變更並建議拆分 commit
-- 使用 emoji + conventional commit 格式
-- 支援多種 commit 類型（feat, fix, docs, style, refactor, perf, test, chore）
-
----
-
-### `/create-branch`
-
-根據描述建立新分支，可選擇設定 worktree。
-
-```bash
-# 從描述建立分支
-/create-branch "add dark mode toggle"
-
-# 從程式碼變更自動產生分支名稱
-/create-branch
-```
-
-**功能**：
-- 智慧分支命名（feature/, fix/, refactor/, docs/ 等）
-- 支援建立 worktree 進行平行開發
-- 驗證分支名稱和衝突檢測
-- 自動分析程式碼變更產生描述
-
----
-
-### `/create-pr`
-
-建立新分支、提交變更並建立 Pull Request。
-
-```bash
-# 自動建立 PR
-/create-pr
-
-# 指定標題
-/create-pr "Add user authentication feature"
-
-# 建立 draft PR
-/create-pr --draft
-```
-
-**功能**：
-- 自動將變更拆分成多個邏輯 commit
-- 產生 PR 摘要和測試計劃
-- 支援 draft PR
-- 使用 GitHub CLI 建立 PR
-
----
-
-### `/pr-review`
-
-進行多角度的 PR 審查。
-
-```bash
-# 審查指定 PR
-/pr-review 123
-
-# 審查 PR 連結
-/pr-review https://github.com/user/repo/pull/123
-```
-
-**審查角度**：
-1. **產品經理**：商業價值、用戶體驗、策略對齊
-2. **開發者**：程式碼品質、效能、最佳實踐
-3. **QA 工程師**：測試覆蓋、邊界情況、回歸風險
-4. **安全工程師**：漏洞檢測、資料處理、合規性
-5. **DevOps**：CI/CD、基礎設施、監控
-6. **UI/UX 設計師**：視覺一致性、可用性、無障礙
 
 ## 工作流程範例
 
 ### 完整開發流程
 
 ```bash
-# 1. 建立新功能分支
-/create-branch "add user profile page"
+/run --full
 
-# 2. 開發完成後，建立結構化 commit
-/commit
+# 第一階段：收集設定
+# [多選] 要執行的步驟：Branch, Commit, PR
+# [詢問] 分支描述：add user profile
+# [詢問] MR 目標分支：develop
 
-# 3. 自我程式碼審查
-/code-review
+# 第二階段：依序執行（不中斷）
+# → Create Branch: feature/add-user-profile ✓
+# → Commit: feat(user): add profile page ✓
+# → Create PR: !123 ✓
 
-# 4. 建立 PR
-/create-pr
-
-# 5. 請求團隊審查
-/pr-review 123
+# 第三階段：報告
+# Branch: feature/add-user-profile
+# Commit: feat(user): add profile page
+# MR: !123 https://gitlab.com/...
 ```
 
-### 分支維護流程
+### 單一任務
 
 ```bash
-# 定期清理合併的分支
-/branch-cleanup --dry-run  # 先預覽
-/branch-cleanup            # 確認後執行
+# 只建立分支
+/run --step create-branch
+
+# 只提交
+/run --step commit
+
+# 只建立 PR（指定目標分支）
+/run --step create-pr
+```
+
+## 插件結構
+
+```
+git-workflow/
+├── .claude-plugin/plugin.json
+├── README.md
+├── commands/
+│   └── run.md                   # 整合性主命令
+└── skills/
+    ├── create-branch/
+    │   └── SKILL.md             # 建立分支技能
+    ├── commit/
+    │   └── SKILL.md             # Commit 工作流程（內建）
+    └── create-pr/
+        ├── SKILL.md             # 建立 PR 技能
+        └── scripts/
+            └── gitlab-cross-project-mr.sh
 ```
 
 ## 相依套件
 
-此 Plugin 使用以下工具：
 - Git（必需）
-- GitHub CLI (`gh`)（用於 PR 相關功能）
+- GitLab MCP Server（用於同專案 MR）
+- curl（用於跨專案 MR API 呼叫）
 
 ## 授權
 

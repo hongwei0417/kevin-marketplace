@@ -1,5 +1,5 @@
 {
-	"name": "kevin-claude-marketplace",
+	"name": "kevin-claude-marketplace123",
 	"description": "Kevin 的 Claude Code Plugin Marketplace - 包含文檔摘要、Notion 整合和 RFC 管理工具",
 	"owner": {
 		"name": "Kevin Hu",
@@ -35,14 +35,14 @@
 		{
 			"name": "git-workflow",
 			"source": "./plugins/git-workflow",
-			"description": "完整的 Git 工作流程命令集，包含分支管理、提交、程式碼審查和 PR 工作流程",
-			"version": "1.0.0",
+			"description": "Integrated Git workflow plugin providing commit → create-branch → create-pr flow with fork cross-project MR support",
+			"version": "2.0.0",
 			"author": {
 				"name": "Kevin Hu"
 			},
-			"keywords": ["git", "workflow", "branch", "commit", "pr", "code-review"],
+			"keywords": ["git", "workflow", "branch", "commit", "pr", "code-review", "gitlab", "fork"],
 			"category": "developer-tools",
-			"tags": ["git", "workflow", "branch", "commit", "pr"]
+			"tags": ["git", "workflow", "gitlab", "mr", "fork"]
 		}
 	]
 }
