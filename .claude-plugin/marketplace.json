@@ -9,18 +9,6 @@
 	"homepage": "https://github.com/hongwei0417/kevin-marketplace",
 	"plugins": [
 		{
-			"name": "doc-utils",
-			"source": "./plugins/doc-utils",
-			"description": "分析文檔並生成繁體中文摘要，自動上傳至 Notion AI Documents 資料庫",
-			"version": "1.0.0",
-			"author": {
-				"name": "Kevin Hu"
-			},
-			"keywords": ["documentation", "summary", "notion", "traditional-chinese", "ai-documents"],
-			"category": "productivity",
-			"tags": ["notion", "documentation", "chinese", "ai"]
-		},
-		{
 			"name": "rfc-manager",
 			"source": "./plugins/rfc-manager",
 			"description": "管理 Moxa 前端團隊的 RFC（Request for Comments）流程，包含提案、討論、投票、歸檔和追蹤功能",
